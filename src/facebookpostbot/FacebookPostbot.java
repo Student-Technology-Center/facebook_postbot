@@ -1,5 +1,3 @@
-package facebookpostbot;
-
 /**
  *
  * @author Connor J Hopkins
