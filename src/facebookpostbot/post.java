@@ -3,8 +3,6 @@
  *
  * @author Connor J Hopkins
  */
-package facebookpostbot;
-
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
