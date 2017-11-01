@@ -6,15 +6,14 @@ import org.json.JSONException;
  * @author Connor J Hopkins
  */
 public class FacebookPostbot {
-
+    private static String JSON_URL = "http://west.wwu.edu/stcworkshops/workshop_json.asp";
+    private static String STC_PAGE = "https://stc.wwu.edu/workshops";
     public static void main(String[] args) {
-        try {
-            jsonPage page = new jsonPage("http://west.wwu.edu/stcworkshops/workshop_json.asp");
-            post p = new post(page.getJSONArray(), "https://stc.wwu.edu/workshops");
-            p.makePost();
-        } catch(IOException | JSONException e) {
-            e.printStackTrace();
-        }
+    try {
+        post p = new post(this.JSON_URL, this.STC_PAGE);
+        p.makePost();
+    } catch(IOException | JSONException e) {
+        e.printStackTrace();
     }
-    
+  }
 }
