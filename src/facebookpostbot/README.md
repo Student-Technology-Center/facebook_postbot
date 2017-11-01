@@ -1,3 +1,5 @@
+# Getting Page Access Token and ID
+
 ## 0. Create Facebook App
 
 Go to My Apps.
@@ -23,7 +25,7 @@ The token that appears in the "Access Token" field is your short-lived access to
 
 Following these instructions from the Facebook docs, make a GET request to
 
-https://graph.facebook.com/v2.10/oauth/access_token?grant_type=fb_exchange_token&client_id={app_id}&client_secret={app_secret}&fb_exchange_token={short_lived_token}
+"https://graph.facebook.com/v2.10/oauth/access_token?grant_type=fb_exchange_token&client_id={app_id}&client_secret={app_secret}&fb_exchange_token={short_lived_token}"
 entering in your app's ID and secret and the short-lived token generated in the previous step.
 
 You can also use the Graph API explorer to do this. Simply toggle POST under the GET dropdown on the left, and add four fields:
@@ -43,7 +45,7 @@ The response should look like this:
 
 Using the long-lived access token, make a GET request to
 
-https://graph.facebook.com/v2.10/me?access_token={long_lived_access_token}
+"https://graph.facebook.com/v2.10/me?access_token={long_lived_access_token}"
 The id field is your account ID. You'll need it for the next step.
 
 ----------------------------------
@@ -52,7 +54,7 @@ The id field is your account ID. You'll need it for the next step.
 
 Make a GET request to
 
-https://graph.facebook.com/v2.10/{account_id}/accounts?access_token={long_lived_access_token}
+"https://graph.facebook.com/v2.10/{account_id}/accounts?access_token={long_lived_access_token}"
 
 The JSON response should have a data field under which is an array of items the user has access to. Find the item for the page you want the permanent access token from. The access_token field should have your permanent access token. Copy it and test it in the Access Token Debugger. Under "Expires" it should say "Never".
 
