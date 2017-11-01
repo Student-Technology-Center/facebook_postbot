@@ -5,6 +5,9 @@ import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import java.io.IOException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 /**
  *
@@ -15,18 +18,17 @@ public class weeklyMessage {
     private final JSONArray workshopArray;
     
     public weeklyMessage(String url) throws JSONException{
-		this.JSON_URL = url;
-		 try {
+	this.JSON_URL = url;
+	try {
             this.workshopArray = jsonUrlToObject(this.JSON_URL).getJSONArray("workshops");
         } catch(JSONException e) {
             e.printStackTrace();
         }
-		this.weeklyMessage = getMessage(this.workshopArray);
+	this.weeklyMessage = getMessage(this.workshopArray);
     }
-    
-	private String getMessage(JSONArray workshopArray) {
-		Date nextWeek = addWeek(new Date());
-		JSONObject workshop;
+    private String getMessage(JSONArray workshopArray) {
+	Date nextWeek = addWeek(new Date());
+	JSONObject workshop;
         String workshopDate, message;
         message = "Workshops happening this week:";
 		
