@@ -16,12 +16,12 @@ public class weeklyMessage {
     
     public weeklyMessage(JSONArray workshops) throws JSONException{
         this.workshopArray = workshops;
-		this.weeklyMessage = getMessage(this.workshopArray);
+		this.weeklyMessage = populateMessage(this.workshopArray);
     }
     
-	private String getMessage(JSONArray workshopArray) {
-		Date nextWeek = addWeek(new Date());
-		JSONObject workshop;
+    private String populateMessage(JSONArray workshopArray) {
+	Date nextWeek = addWeek(new Date());
+	JSONObject workshop;
         String workshopDate, message;
         message = "Workshops happening this week:";
 		
@@ -63,7 +63,6 @@ public class weeklyMessage {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return date;
     }
     
