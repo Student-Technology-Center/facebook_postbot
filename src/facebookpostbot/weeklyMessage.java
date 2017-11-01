@@ -11,17 +11,22 @@ import org.json.JSONObject;
  * @author Connor J Hopkins
  */
 public class weeklyMessage {
-    private String weeklyMessage;
+    private String weeklyMessage, JSON_URL;
     private final JSONArray workshopArray;
     
-    public weeklyMessage(JSONArray workshops) throws JSONException{
-        this.workshopArray = workshops;
-		this.weeklyMessage = populateMessage(this.workshopArray);
+    public weeklyMessage(String url) throws JSONException{
+		this.JSON_URL = url;
+		 try {
+            this.workshopArray = jsonUrlToObject(this.JSON_URL).getJSONArray("workshops");
+        } catch(JSONException e) {
+            e.printStackTrace();
+        }
+		this.weeklyMessage = getMessage(this.workshopArray);
     }
     
-    private String populateMessage(JSONArray workshopArray) {
-	Date nextWeek = addWeek(new Date());
-	JSONObject workshop;
+	private String getMessage(JSONArray workshopArray) {
+		Date nextWeek = addWeek(new Date());
+		JSONObject workshop;
         String workshopDate, message;
         message = "Workshops happening this week:";
 		
@@ -63,7 +68,28 @@ public class weeklyMessage {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         return date;
+    }
+	
+    private JSONObject jsonUrlToObject(String JSON_URL) {
+        Document doc;
+        try {
+            doc = Jsoup.connect(JSON_URL).get();
+        } catch(IOException e) {
+            e.printStackTrace();
+            doc = new Document("error");
+        }
+        
+        String jsonText = doc.body().text();
+        JSONObject obj;
+        try{
+            obj = new JSONObject(jsonText);
+        } catch(JSONException e) {
+            e.printStackTrace();
+            obj = new JSONObject();
+        }
+        return obj;
     }
     
     public String getMessage() {
