@@ -29,10 +29,10 @@ https://graph.facebook.com/v2.10/oauth/access_token?grant_type=fb_exchange_token
 entering in your app's ID and secret and the short-lived token generated in the previous step.
 
 You can also use the Graph API explorer to do this. first replace "me?fields=id,name" with "oauth/access_token" into the field to the left of the Submit button, then simply toggle POST under the GET dropdown to the left of that, and add these four fields:
-grant_type fb_exchange_token
-client_id {app_id}
-client_secret {app_secret}
-fb_exchange_token {short_lived_token}
+..*grant_type fb_exchange_token
+..*client_id {app_id}
+..*client_secret {app_secret}
+..*fb_exchange_token {short_lived_token}
 
 The response should look like this:
 
