@@ -1,3 +1,4 @@
+package edu.wwu.techcenter.facebook_postbot;
 
 /**
  *
@@ -11,13 +12,13 @@ import com.restfb.types.FacebookType;
 import org.json.JSONException;
 
 public class post {
-    private final FacebookClient FB_CLIENT;
-    private final String PAGE_ID;
-    private final STC_PAGE;
-    private final String MESSAGE;
+    private FacebookClient FB_CLIENT;
+    private String STC_PAGE;
+    private String MESSAGE;
+    private String PAGE_ID = null;
 
     public post(String url, String link) throws JSONException {
-        String pageAccessToken;
+        String pageAccessToken = null;
 
         try {
             pageAccessToken = System.getenv("fb_page_access_token");
@@ -25,16 +26,25 @@ public class post {
         } catch (Exception e) {
             // TODO: Log this
             System.out.println("\nFAILED TO GET ENVIRONMENT VARIABLE\n\n" + e);
-            this.PAGE_ID = "";
+            
+            if (PAGE_ID != null) {
+                this.PAGE_ID = "";
+            }
+        }
+        
+        // TODO: Should be handled better
+        if (pageAccessToken == null) {
+            return;
         }
 
         this.STC_PAGE = link;
-        this.fbClient = getFbClient(pageAccessToken);
-        this.message = new weeklyMessage(url).getMessage();
+        this.FB_CLIENT = getFbClient(pageAccessToken);
+        this.MESSAGE = new weeklyMessage(url).getMessage();
     }
 
+    @SuppressWarnings("deprecation")
     private FacebookClient getFbClient(String accessToken) {
-        FacebookClient facebookClient;
+        FacebookClient facebookClient = null;
         int count = 0;
         
         while (count < 2) {
@@ -47,12 +57,12 @@ public class post {
             }
         }
         
-        return c;
+        return facebookClient;
     }
 
     public void makePost() {
-        this.fbClient.publish(PAGE_ID + "/feed", FacebookType.class,
-                Parameter.with("message", this.message),
+        this.FB_CLIENT.publish(PAGE_ID + "/feed", FacebookType.class,
+                Parameter.with("message", this.MESSAGE),
                 Parameter.with("link", this.STC_PAGE));
     }
 }

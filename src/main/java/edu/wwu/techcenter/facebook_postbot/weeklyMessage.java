@@ -1,4 +1,5 @@
-import java.text.ParseException;
+package edu.wwu.techcenter.facebook_postbot;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ public class weeklyMessage {
             //true iff date1 is before or == date2
             if(stringToDate(workshopDate).compareTo(nextWeek) <= 0) {
                 message +=   "\n" + workshop.getString("name") + "\n" + "---"+ workshop.getString("date") + "at "+ workshop.getString("start") + "\n";
+            }
         }
         message += "\nTo sign up for a workshop, please visit our website at the link below. We hope to see you soon!\n";
         return message;

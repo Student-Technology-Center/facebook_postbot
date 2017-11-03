@@ -1,3 +1,5 @@
+package edu.wwu.techcenter.facebook_postbot;
+
 import org.json.JSONException;
 
 /**
@@ -5,11 +7,11 @@ import org.json.JSONException;
  * @author Connor J Hopkins
  */
 public class FacebookPostbot {
-    private final String JSON_URL = "http://west.wwu.edu/stcworkshops/workshop_json.asp";
-    private final String STC_PAGE = "https://stc.wwu.edu/workshops";
-
     public static void main(String[] args) {
-        post p;
+        final String JSON_URL = "http://west.wwu.edu/stcworkshops/workshop_json.asp";
+        final String STC_PAGE = "https://stc.wwu.edu/workshops";
+        
+        post p = null;
 
         int count = 0;
         while (count < 2) {
