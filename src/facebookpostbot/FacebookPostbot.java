@@ -5,8 +5,8 @@ import org.json.JSONException;
  * @author Connor J Hopkins
  */
 public class FacebookPostbot {
-    private static final String JSON_URL = "http://west.wwu.edu/stcworkshops/workshop_json.asp";
-    private static final String STC_PAGE = "https://stc.wwu.edu/workshops";
+    private final String JSON_URL = "http://west.wwu.edu/stcworkshops/workshop_json.asp";
+    private final String STC_PAGE = "https://stc.wwu.edu/workshops";
 
     public static void main(String[] args) {
 
