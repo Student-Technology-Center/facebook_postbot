@@ -11,40 +11,42 @@ import com.restfb.types.FacebookType;
 import org.json.JSONException;
 
 public class post {
-    private String PAGE_ACCESS_TOKEN, PAGE_ID;
-    private final FacebookClient fbClient;
-    private final String message, JSON_URL, STC_PAGE;
+    private final FacebookClient FB_CLIENT;
+    private final String PAGE_ID;
+    private final STC_PAGE;
+    private final String MESSAGE;
 
     public post(String url, String link) throws JSONException {
+        String pageAccessToken;
+
         try {
-            this.PAGE_ACCESS_TOKEN = System.getenv("fb_page_access_token");
+            pageAccessToken = System.getenv("fb_page_access_token");
             this.PAGE_ID = System.getenv("fb_page_id");
         } catch (Exception e) {
+            // TODO: Log this
             System.out.println("\nFAILED TO GET ENVIRONMENT VARIABLE\n\n" + e);
-            this.PAGE_ACCESS_TOKEN = this.PAGE_ID = "";
+            this.PAGE_ID = "";
         }
-        this.JSON_URL = url;
+
         this.STC_PAGE = link;
-        this.fbClient = getFbClient(this.PAGE_ACCESS_TOKEN);
-        this.message = new weeklyMessage(this.JSON_URL).getMessage();
+        this.fbClient = getFbClient(pageAccessToken);
+        this.message = new weeklyMessage(url).getMessage();
     }
 
     private FacebookClient getFbClient(String accessToken) {
-        FacebookClient c = null;
+        FacebookClient facebookClient;
         int count = 0;
-        boolean go = true;
-        while (go) {
+        
+        while (count < 2) {
             try {
-                c = new DefaultFacebookClient(accessToken);
-                go = false;
+                facebookClient = new DefaultFacebookClient(accessToken);
+                break;
             } catch (FacebookException e) {
-                if (++count > 2) {
-                    System.out.println(
-                            "\nFAILED TO ESTABLISH FACEBOOK CLIENT\n\n" + e);
-                    go = false;
-                }
+                System.out.println("\nFAILED TO ESTABLISH FACEBOOK CLIENT\n\n" + e);
+                count++;
             }
         }
+        
         return c;
     }
 
