@@ -9,20 +9,24 @@ public class FacebookPostbot {
     private final String STC_PAGE = "https://stc.wwu.edu/workshops";
 
     public static void main(String[] args) {
+        post p;
 
-        boolean go = true;
         int count = 0;
-        while (go) {
+        while (count < 2) {
+            // TODO: Cleaner for now but we shouldn't be handling the error
+            // here.
             try {
-                post p = new post(JSON_URL, STC_PAGE);
-                p.makePost();
-                go = false;
+                p = new post(JSON_URL, STC_PAGE);
             } catch (JSONException e) {
-                if (++count > 2) {
-                    System.out.println("\nFAILED TO MAKE POST \n\n" + e);
-                    go = false;
-                }
+                System.out.println("\nFAILED TO MAKE POST \n\n" + e);
+                count++;
             }
         }
+
+        if (p == null) {
+            return;
+        }
+
+        p.makePost();
     }
 }
