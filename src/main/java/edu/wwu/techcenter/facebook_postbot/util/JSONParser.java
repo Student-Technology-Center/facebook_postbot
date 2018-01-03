@@ -16,7 +16,7 @@ import org.jsoup.nodes.Document;
 public class JSONParser {
 	private final static String JSON_URL = "http://west.wwu.edu/stcworkshops/workshop_json.asp";
 
-	public static ArrayList<Workshop> getWorkshopList() {
+	public static ArrayList<Workshop> getWeeklyWorkshopList() {
 		JSONArray jsonArray = getWorkshopJSONArray();
 
 		if (jsonArray == null) {
