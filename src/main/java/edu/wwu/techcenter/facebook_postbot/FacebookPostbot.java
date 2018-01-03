@@ -30,7 +30,7 @@ public class FacebookPostbot {
 			}
 
 			// If in getting the workshop list there was an issue, it'll always return null
-			ArrayList<Workshop> workshopList = JSONParser.getWorkshopList();
+			ArrayList<Workshop> workshopList = JSONParser.getWeeklyWorkshopList();
 			if (workshopList == null) {
 				count++;
 				try {
@@ -64,16 +64,24 @@ public class FacebookPostbot {
 				continue;
 			}
 
-			String message = "Workshops happening this week:";
-
+			 
+			String message = "Here are the workshops happening this week:\n\n";
+                        String latestDate = workshopList.get(0).date;
+                        message += latestDate + "\n";
+                        
 			for (Workshop workshop : workshopList) {
-				message += "\n" + workshop.name + "\n" + "---" + workshop.date + "at " + workshop.start + "\n";
+                                if(!workshop.date.equals(latestDate)) {
+                                    message += "\n" + workshop.date + "\n";
+                                    latestDate = workshop.date;
+                                }
+				message += "--" + workshop.name + "at " + workshop.start + "\n";
 			}
 
 			message += "\nTo sign up for a workshop, please visit our website at the link below. We hope to see you soon!\n";
-
+                        
 			fbClient.publish(fbPageID + "/feed", FacebookType.class, Parameter.with("message", message),
 					Parameter.with("link", STC_PAGE));
+			return;
 		}
 	}
 }
