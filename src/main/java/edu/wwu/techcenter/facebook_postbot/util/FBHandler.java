@@ -1,5 +1,9 @@
 package edu.wwu.techcenter.facebook_postbot.util;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
+
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.exception.FacebookException;
