@@ -5,12 +5,23 @@ import com.restfb.FacebookClient;
 import com.restfb.exception.FacebookException;
 
 public class FBHandler {
-	private static final String FB_TOKEN = "fb_page_access_token";
-	private static final String FB_PAGE_ID = "fb_page_id";
+	private static final String FB_PAGE_ID = "1479556868760012";
 
 	public static FacebookClient getFBClient() {
-		String pageAccessToken = System.getenv(FB_TOKEN);
+		
+                String pageAccessToken = null;
+                
+                try {
+                    Properties pro = new Properties();
+                    FileInputStream in = new FileInputStream("src/bot.properties");
+                    pro.load(in);
+                    // getting values from property file
+                    pageAccessToken = pro.getProperty("FB_TOKEN");
 
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                
 		if (pageAccessToken == null) {
 			System.out.println("\nFAILED TO GET ENVIRONMENT VARIABLE\n\n");
 			return null;
@@ -20,13 +31,7 @@ public class FBHandler {
 	}
 
 	public static String getPageID() {
-		String pageID = System.getenv(FB_PAGE_ID);
-		if (pageID == null) {
-			System.out.println("\nFAILED TO GET ENVIRONMENT VARIABLE\n\n");
-			return null;
-		}
-
-		return pageID;
+            return FB_PAGE_ID;
 	}
 
 	@SuppressWarnings("deprecation")
